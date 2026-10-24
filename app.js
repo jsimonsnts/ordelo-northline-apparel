@@ -74,7 +74,7 @@ function message(m) {
 function card(type) {
     if (type === 'product') {
         const p = D.products[0];
-        return `<div class="product-card"><strong>${p.name}</strong><div class="product-price">${money(p.price)}</div><div class="meta">${p.sizes} · ${p.stock} in stock</div><button class="secondary" style="margin-top:10px">View product</button></div>`;
+        return `<div class="product-card"><strong>${p.name}</strong><div class="product-price">${money(p.price)}</div><div class="meta">${p.sizes} · ${p.stock} in stock</div></div>`;
     }
     return `<div class="receipt-card"><strong>Order #1049 created</strong><div class="meta" style="margin-top:6px">Navy linen shirt · Medium</div><div class="order-total" style="font-size:14px;margin-top:10px;padding-top:10px"><span>Total</span><span>${money(68)}</span></div></div>`;
 }
