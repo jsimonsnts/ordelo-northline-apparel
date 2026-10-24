@@ -173,7 +173,7 @@ function orderDrawer() {
 
 function customersPage() {
     const p = customer(state.customerId);
-    return `<div class="page-title"><div><div class="eyebrow">People behind the orders</div><h2>Customers</h2><p class="sub">Know the context before you reply.</p></div><button class="primary" data-action="new-customer">＋ Add customer</button></div><div class="split-layout"><div class="card customer-list">${D.customers.map(c=>`<div class="customer-row ${c.id===state.customerId?'active':''}" data-customer="${c.id}"><div class="initials">${c.initials}</div><div><div class="customer">${c.name}</div><div class="meta">${c.orders} orders · ${money(c.spent)}</div></div><span style="margin-left:auto;color:#a2adb5">›</span></div>`).join('')}</div><div class="card profile"><div class="profile-head"><div class="initials">${p.initials}</div><div><h3 style="margin:0 0 4px">${p.name}</h3><div class="meta">Customer since April 2024</div></div></div><div class="profile-grid"><div class="field"><label>Phone</label><strong>${p.phone}</strong></div><div class="field"><label>Orders</label><strong>${p.orders} orders · ${money(p.spent)}</strong></div><div class="field"><label>Channels</label><div class="tag-list">${p.channels.map(x=>`<span class="tag"><span class="channel-dot channel-${x}"></span> ${x}</span>`).join('')}</div></div><div class="field"><label>Tags</label><div class="tag-list">${p.tags.map(x=>`<span class="tag">${x}</span>`).join('')}</div></div></div><div class="field"><label>Saved address</label><strong>${p.address}</strong></div><button class="secondary" style="margin-top:25px" data-action="view-customer-chat">View conversations</button></div></div>`;
+    return `<div class="page-title"><div><div class="eyebrow">People behind the orders</div><h2>Customers</h2><p class="sub">Know the context before you reply.</p></div></div><div class="split-layout"><div class="card customer-list">${D.customers.map(c=>`<div class="customer-row ${c.id===state.customerId?'active':''}" data-customer="${c.id}"><div class="initials">${c.initials}</div><div><div class="customer">${c.name}</div><div class="meta">${c.orders} orders · ${money(c.spent)}</div></div><span style="margin-left:auto;color:#a2adb5">›</span></div>`).join('')}</div><div class="card profile"><div class="profile-head"><div class="initials">${p.initials}</div><div><h3 style="margin:0 0 4px">${p.name}</h3><div class="meta">Customer since April 2024</div></div></div><div class="profile-grid"><div class="field"><label>Phone</label><strong>${p.phone}</strong></div><div class="field"><label>Orders</label><strong>${p.orders} orders · ${money(p.spent)}</strong></div><div class="field"><label>Channels</label><div class="tag-list">${p.channels.map(x=>`<span class="tag"><span class="channel-dot channel-${x}"></span> ${x}</span>`).join('')}</div></div><div class="field"><label>Tags</label><div class="tag-list">${p.tags.map(x=>`<span class="tag">${x}</span>`).join('')}</div></div></div><div class="field"><label>Saved address</label><strong>${p.address}</strong></div><button class="secondary" style="margin-top:25px" data-action="view-customer-chat">View conversations</button></div></div>`;
 }
 
 function agentPage() {
@@ -182,7 +182,8 @@ function agentPage() {
 
 function bind() {
     document.querySelectorAll('[data-nav]').forEach(b => b.onclick = () => setState({
-        page: b.dataset.nav
+        page: b.dataset.nav,
+        orderId: null
     }));
     document.querySelectorAll('[data-channel]').forEach(b => b.onclick = () => setState({
         channel: b.dataset.channel
@@ -247,6 +248,7 @@ function action(type, el) {
     } else if (type === 'view-customer-chat') {
         setState({
             page: 'Inbox',
+            orderId: null,
             conversationId: D.conversations.find(c => c.customerId === state.customerId)?.id || 'conv1'
         });
     } else if (type === 'new-customer') {
